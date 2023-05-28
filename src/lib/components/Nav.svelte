@@ -26,6 +26,10 @@
       href: '/dashboard'
     },
     {
+      name: 'Schedule',
+      href: '/schedule'
+    },
+    {
       name: 'Apply',
       href: '/apply'
     },
