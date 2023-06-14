@@ -36,6 +36,10 @@
     {
       name: 'Group',
       href: '/group'
+    },
+    {
+      name: 'Form',
+      href: '/form'
     }
   ]
   function updateShadow() {

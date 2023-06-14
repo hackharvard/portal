@@ -1,398 +1,359 @@
 <!--  Things to do -->
-<!--    > make it adjust correctly when screen size adjusts
-        > add a form to admin side where ppl can add events to the schedule
-        > make it so that when the category of the box is clicked, the related 
-          events pop up and when checked, they disappear 
-        > how to position correctly on screen?
-        >  -->
+<!--    > add a form to admin side where ppl can add events to the schedule
+        > 15 minute long events? 
+        > overlap -->
 
 <script>
-  import Input from '$lib/components/Input.svelte';
-  import Modal from '$lib/components/Modal.svelte';
+  import { onMount } from 'svelte';
+  import { writable } from 'svelte/store';
+  import ScheduleStore from "$lib/ScheduleStore.js";
 
-    
-  // events
-  let events = [
-      { id: 1, title: "Karaoke", description: "description", time: "2023-04-20T00:10:00", category: "Social"},
-      { id: 2, title: "Speaker", description: "description", time: "2023-04-21T14:30:00", category: "Meal" },
-      { id: 3, title: "Dinner", description: "description", time: "2023-04-22T18:45:00", category: "Meal" },
-      { id: 4, title: "Team Building", description: "description", time: "2023-04-22T19:45:00", category: "Meal" },
-      { id: 5, title: "Photo Booth", description: "description ", time: "2023-04-21T17:30:00", category: "Social" },
-      { id: 6, title: "Design Time", description: "description", time: "2023-04-22T15:20:00", category: "Project" },
-      { id: 7, title: "Tech Talk", description: "description", time: "2023-04-22T15:45:00", category: "Project" }
-  
+
+  let timeslots = [
+    "12:00 am", "1:00 am", "2:00 am", "3:00 am", "4:00 am", "5:00 am",
+    "6:00 am", "7:00 am", "8:00 am", "9:00 am", "10:00 am", "11:00 am",
+    "12:00 pm", "1:00 pm", "2:00 pm", "3:00 pm", "4:00 pm", "5:00 pm",
+    "6:00 pm", "7:00 pm", "8:00 pm", "9:00 pm", "10:00 pm", "11:00 pm"
   ];
-  
-  function organizeEventsByHour(events) {
-      let eventDict = {};
-  
-      events.forEach(event => {
-      let eventTime = new Date(event.time);
-      let hour = eventTime.getHours();
-  
-      if (!(hour in eventDict)) {
-          eventDict[hour] = [];
-      }
-  
-      eventDict[hour].push(event);
-      });
-  
-      return eventDict;
-  }
-  
-  // dictionary with all the events organized by hour
-  let organizedEvents = organizeEventsByHour(events);
-  
-  function organizeEventsByCategory(events) {
-      let eventDict = {};
-  
-      events.forEach(event => {
-      let category = event.category;
-      if (!(category in eventDict)) {
-          eventDict[category] = [];
-      }
-      eventDict[category].push(event);
-      })
-  }
-  
-  // dictionary with all the events organized by category
-  let categorizedEvents = organizeEventsByCategory(events);
-  
-  function formatTime(dateString) {
-          const date = new Date(dateString);
-          const hours = date.getHours();
-          const minutes = date.getMinutes();
-          const amOrPm = hours >= 12 ? "pm" : "am";
-          const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
-          const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-      return `${formattedHours}:${formattedMinutes} ${amOrPm}`;
-  }
-  
-  // to make events visible with text boxes
-  let VisibleTest = false;
-  let VisibleMeal = false;
-  let VisibleSocial = false;
-  let VisibleWorkshop = false;
-  let VisibleProject = false;
 
-  // makes a div for each event
-  function eventDiv(events) {
-    if (events && events.length > 0) {
-      let result = "";
-      for (let i = 0; i < events.length; i++) {
-        // onclick={() => openModal(${events[i].id})} 
-        result += `<div
-                    class:hidden={!Visible${events[i].category}}
-                    class="bg-blue-200"
-                    style="border-radius: 4px;
-                          margin-top: 10px;
-                          margin-bottom: 10px;
-                          padding: 10px;
-                          font-weight: bold;"
-                    >
-                      ${events[i].title}
-                    <h2 style="text-align: right;">${formatTime(events[i].time)}</h2>
-                  </div>`;
-      } return result;
+  let items = Array.from({ length: 48 }, (_, i) => i + 1);
 
+  function calWidth(col){
+    if (col === 1) {
+      return 32.50
+    } else if (col == 2) {
+      return 48.60
     } else {
-
-      return `<p
-                style="background-color: #f6f6f6;
-                      border-radius: 4px;
-                      padding: 10px;
-                      margin-top: 10px;
-                      margin-bottom: 10px;" >
-                No Events
-              </p>`;
+      return 98
     }
   }
 
-  // for testing
-  function hideEvents () {
-    return `<p 
-                  style=" background-color: #f6f6f6;
-                          border-radius: 4px;
-                          padding: 10px;
-                          margin-top: 10px;
-                          margin-bottom: 10px; ">
-                  No Events </p>`
+  function convertToMinutes(time) {
+    let timeParts = time.split(":");
+    let hours = parseInt(timeParts[0]);
+    let minutes = parseInt(timeParts[1]);
+  
+    let totalMinutes = (hours * 60) + minutes;
+    return totalMinutes;
   }
 
+  function convertInputTime(startTime) {
+    let s = startTime.toString();
+    return (convertToMinutes(s) / 15) + 1
+  }
 
-  // Modal code 
-  let selectedEvent = null;
+  function convertInputDate(eventDate) {
+    let e = eventDate.toString();
+    if (e === '2023-10-20') {
+      return 1 
+    } else if (e === '2023-10-21') {
+      return 2
+    } else if (e === '2023-10-22') {
+      return 3
+    }
+  }
+
+  function eventColor(category) {
+    if (category === 'Networking and Community Building') {
+      return 'rgba(112, 214, 255, .75)';
+    } else if (category === 'Meals') {
+      return 'rgba(255, 112, 166, .75)';
+    } else if (category === 'Learning and Skill Development') {
+      return 'rgba(255, 151, 112, .75)';
+    } else if (category === 'Project') {
+      return 'rgba(233, 255, 112, .75)';
+    }
+  }
+
+  const selectedEventId = writable(null);
+  const showModal = writable(false);
 
   function openModal(eventId) {
-    selectedEvent = events.find(event => event.id === eventId);
+    selectedEventId.set(eventId);
+    showModal.set(true);
   }
 
   function closeModal() {
-    selectedEvent = null;
+    selectedEventId.set(null);
+    showModal.set(false);
   }
 
-</script> 
-          
+  // might need to round
+
+  function convertToTime(time) {
+    let t = (time - 1) * 15;
+    let x = t / 60;
+    if (t < 60) {
+      let new_time = ['12', (t.toString() === '0' ? '00' : t.toString())]
+      return (new_time.join(':') + ' am')
+    } else {
+      if (x > 12) {
+        if (x < 13) {
+          let minutes = (x - 12) * 15 / .25;
+          let new_time = ['12', (minutes.toString() === '0' ? '00' : minutes.toString())];
+          return (new_time.join(':') + ' pm')
+        } else {
+          let hour = (Math.floor(x - 12));
+          let minutes = (x - 12 - hour) * 15 / .25;
+          let new_time = [hour.toString(), (minutes.toString() === '0' ? '00' : minutes.toString())];
+          return (new_time.join(':') + ' pm')
+        }
+      } else {
+        let hour = Math.floor(x)
+        let minutes = (x - hour) * 15 / .25
+        let new_time = [hour.toString(), (minutes.toString() === '0' ? '00' : minutes.toString())]
+        let z = (hour === 12 ? ' pm' : ' am');
+      return (new_time.join(':') + z)
+      }
+    }
+}
+
+</script>
+
+<div class="grid md:grid-cols-3">
+
 <h1 class="mb-8 text-5xl font-bold md:text-6xl">Schedule</h1>
 
-<div class="entire"> 
-    <div class="check">
-        <h1 class="font-bold text-lg"> Filter </h1>
-        <label>
-          <input type="checkbox" bind:checked={VisibleTest}/>
-          Test
-        </label>
-        
-        <br>
-        
-        <label>
-          <input type="checkbox" bind:checked={VisibleMeal} /> 
-          Meals 
-        </label>
+<div class="col-span-2 mt-32">
 
-        <br>
+<div class="calendar-container">
+  <div class="header bg-gray-100">
+    <ul class="weekdays">
+      <li>Day 1</li>
+      <li>Day 2</li>
+      <li>Day 3</li>
+    </ul>
+  </div>
 
-        <label>
-          <input type="checkbox" bind:checked={VisibleSocial} /> 
-          Social 
-        </label>
+  <div class="timeslots-container bg-gray-100">
+    <ul class="timeslots">
+      {#each timeslots as timeslot}
+        <li class="flex items-center font-bold">{timeslot}</li>
+      {/each}
+    </ul>
+  </div>
 
-        <br>
 
-        <label>
-          <input type="checkbox" bind:checked={VisibleWorkshop} /> 
-          Workshops 
-        </label>
-
-        <br>
-
-        <!-- Maybe we can make it so that if they're signed in they can set meeting 
-             times with their team (idk if this is necessary) -->
-        <label>
-          <input type="checkbox" bind:checked={VisibleProject} /> 
-          Project 
-        </label>
-
-    </div>
-
-    <div class="col_container" style="border: 1px solid #ced4da; margin-bottom: 30px; border-radius: 4px;">
-        <div class="columns">
-            <div>
-                <p> 12 am </p>
-                {@html eventDiv(organizedEvents[0])}
-            </div>
-            <div>
-                <p> 1 am </p>
-                <div class:hidden={!VisibleTest} onclick={() => openModal(3)} class="example1">
-                  Speaker Event
-                </div>
-                <div class:hidden={!VisibleTest} onclick={() => openModal(3)} class="example1">
-                  Other Event
-                </div>
-                {#if !VisibleTest}
-                  {@html hideEvents()}
-                {/if}
-            </div>
-            <div>
-                <p> 2 am </p>
-                {@html eventDiv(organizedEvents[2])}
-            </div>
-            <div>
-                <p> 3 am </p>
-                {@html eventDiv(organizedEvents[3])}
-            </div>
-            <div>
-                <p> 4 am </p>
-                {@html eventDiv(organizedEvents[4])}
-            </div>
-            <div>
-                <p> 5 am </p>
-                {@html eventDiv(organizedEvents[5])}
-            </div>
-            <div>
-                <p> 6 am </p>
-                {@html eventDiv(organizedEvents[6])}
-            </div>
-            <div>
-                <p> 7 am </p>
-                {@html eventDiv(organizedEvents[7])}
-            </div>
+  <div class="event-container border border-gray-200 shadow">
+    <div class="event-background"></div>
+    {#each $ScheduleStore as event (event.id)}
+      <div key={event.id} class="slot" style={`height: ${(convertInputTime(event.end) - convertInputTime(event.start)) * 15}px; grid-row: ${convertInputTime(event.start)}; grid-column: ${convertInputDate(event.date)}; width:${calWidth(convertInputDate(event.date))}%; background-color:${eventColor(event.category)} `} on:click={() => openModal(event.id)}>
+        <div class="event-status"></div>
+        <div class="ml-2 font-bold" style={`margin-top: ${((convertInputTime(event.end) - convertInputTime(event.start)) * 15) === 30 ? '.05px' : '2px'}; word-wrap: break-word;`}>
+          <span>{event.title}</span>
         </div>
+      </div>
+    {/each}
 
-        <div class="columns">
-            <div>
-                <p> 8 am </p>
-                {@html eventDiv(organizedEvents[8])}
-            </div>
-            <div>
-                <p> 9 am </p>
-                {@html eventDiv(organizedEvents[9])}
-            </div>
-            <div>
-                <p> 10 am </p>
-                {@html eventDiv(organizedEvents[10])}
-            </div>
-            <div>
-                <p> 11 am </p>
-                {@html eventDiv(organizedEvents[11])}
-            </div>
-            <div>
-                <p> 12 am </p>
-                {@html eventDiv(organizedEvents[12])}
-            </div>
-            <div>
-                <p> 1 pm </p>
-                {@html eventDiv(organizedEvents[13])}
-            </div>
-            <div>
-                <p> 2 pm </p>
-                {@html eventDiv(organizedEvents[14])}
-            </div>
-            <div>
-                <p> 3 pm </p>
-                {@html eventDiv(organizedEvents[15])}
-            </div>
-        </div>
-
-        <div class="columns">
-            <div>
-                <p> 4 pm </p>
-                {@html eventDiv(organizedEvents[16])}
-            </div>
-            <div>
-                <p>5 pm</p>
-                {@html eventDiv(organizedEvents[17])}
-            </div>
-            <div>
-                <p> 6 pm </p>
-                {@html eventDiv(organizedEvents[18])}
-            </div>
-            <div>
-                <p> 7 pm </p>
-                {@html eventDiv(organizedEvents[19])}
-            </div>
-            <div>
-                <p> 8 pm </p>
-                {@html eventDiv(organizedEvents[20])}
-            </div>
-            <div>
-                <p> 9 pm </p>
-                {@html eventDiv(organizedEvents[21])}
-            </div>
-            <div>
-                <p> 10 pm </p>
-                {@html eventDiv(organizedEvents[22])}
-            </div>
-            <div>
-                <p> 11 pm </p>
-                <div class:hidden={!VisibleTest} class="example1">
-                  Social Event
-                </div>
-                {#if !VisibleTest}
-                  {@html hideEvents()}
-                {/if}
-            </div>
-        </div>
-    </div>
+    {#each items as item}
+      <div class="grid-line"></div>
+      <div style="height: 30px"></div>
+    {/each}
+  </div>
+</div>
+</div>
 </div>
 
-
-{#if selectedEvent}
-    <div class="modal">
-    <div class="modal-content">
-        <h2>{selectedEvent.title}</h2>
-        <p>{selectedEvent.description}</p>
-        <button on:click={closeModal}>Close</button>
-    </div>
-    </div>
+{#if $showModal && $selectedEventId !== null}
+  {#each $ScheduleStore as item}
+    {#if item.id === $selectedEventId}
+      <div class="modal">
+        <div class="modal-content rounded-md">
+          <div class="mt-5 mb-5 ml-5">
+            <h2 class="font-bold text-2xl">{item.title}</h2>
+            <p class="mt-2"><strong> Description: </strong>{item.description}</p>
+            <p class="mt-2"><strong> Location: </strong> {item.location}</p>
+            <p class="mt-2"> <strong> Date: </strong>{(item.date)}</p>
+            <p class="mt-2"> <strong> Time: </strong> {convertToTime(convertInputTime(item.start))} - {convertToTime(convertInputTime(item.end))}</p>
+            <button class="rounded-md mt-5 bg-blue-100 px-4 py-2 text-blue-900 shadow-sm transition-colors duration-300 hover:bg-blue-200"on:click={closeModal}>Close Modal</button>
+          </div>
+        </div>
+      </div>
+    {/if}
+  {/each}
 {/if}
 
 
-
-
-
 <style>
-  .columns {
-    border-color: black;
-    margin: 10px;
-    width: 330px;
-    border-style: none solid none none;
-  }
-
-  .col_container {
-      display: grid;
-      grid-template-columns: auto auto auto auto;
-      background-color: rgba(217, 216, 216, 0);
-      margin-right: 80px;
-
-  }
-
-  .check {
-      background-color: rgba(182, 175, 175, 0.285);
-      padding: 10px;
-      font-size: 13px;
-      margin-right: 20px;
-      /* margin-left: 10px; */
-      margin-bottom: 30px;
-      border-radius: 4px;
-      
-  }
-
-  .entire {
-      display: grid;
-      grid-template-columns: auto auto auto auto;
-      margin-right: 100px;
-      position: absolute;
-      right: 0;
-
-  }
-
-  .example1 {
-      background-color: rgb(230, 152, 230);
-      border-radius: 4px;
-      margin-top: 10px;
-      margin-bottom: 10px;
-      padding: 10px;
-      font-weight: bold; 
-
-  }
-
-  .category-meal {
-      background-color: red;
-  }
-
   .modal {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background-color: rgba(0, 0, 0, 0.5);
-          z-index: 100;
+    width: 100%;
+    left: 0;
+    top: 0;
+    right: 0;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    z-index: 8;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .modal-content {
-      background-color: #fff;
-      padding: 20px;
-      max-width: 80%;
-      max-height: 80%;
-      overflow-y: auto;
-      border-radius: 8px;
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    width: 400px;
   }
 
-  .modal-close {
-      cursor: pointer;
-      margin-top: 16px;
-      text-align: center;
-      font-weight: bold; 
-      /* color: #bf0603; */
-      font-family: 'Readex Pro', sans-serif;
+  .event-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
   }
 
-  .hidden {
-    display: none;
+  .grid-line {
+    grid-column: 1 / span 3;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.253);
+    z-index: 1;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  ul {
+    margin: 0px;
+    padding: 0px;
+  }
+
+  .calendar-container {
+    display: grid;
+    margin-top: -50px;
+    margin-right: 50px;
+    grid-template-columns: 100px auto;
+    grid-template-rows: auto;
+    gap: 1px 1px;
+    grid-template-areas:
+      ". header"
+      "timeslots-container main";
+  }
+
+  .weekdays{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .weekdays {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-weight: bold;
+  }
+
+  .header {
+    grid-area: header;
+    /* border-radius: 4px;
+    border-width: 1px; */
+    /* background-color: #f2f2f2; */
+    padding: 10px;
+    /* border-bottom: 1px solid #ddd; */
+  }
+
+  .timeslots-container {
+    /* border-radius: 4px;
+    border-width: 1px;
+    background: #f2f2f2; */
+    grid-area: timeslots-container;
+    justify-items: left;
+  }
+
+  .timeslots {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .timeslots li {
+    height: 60px;
+    border-bottom: 1px solid black;
+  }
+
+  .event-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(96, 15px);
+    background: white;
+    grid-area: main;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    border-radius: 4px;
+    z-index: 0;
+  }
+
+
+  .event-container::before,
+  .event-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: rgba(0, 0, 0, 0.253);
+  }
+
+  .event-container::before {
+    left: 33.3333%;
+
+  }
+
+  .event-container::after {
+    left: 66.6666%;
+
+  }
+
+  .event-container .slot {
+    position: absolute;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .slot {
+    position: absolute;
+    border-radius: 5px;
+    z-index: 2;
+    margin-top: 1px;
+    border-color: rgb(3, 155, 229);
+    outline: none;
+  }
+
+  .slot::before {
+    -webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14),
+      0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12),
+      0 3px 5px -1px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 100ms linear;
+  }
+
+  .slot::after {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: -webkit-calc(100% + 2px);
+    width: calc(100% + 2px);
+    height: -webkit-calc(100% + 2px);
+    height: calc(100% + 2px);
+    content: "";
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    pointer-events: none;
+    border: 1px solid #fff;
+  }
+
+  .event-status {
+    float: left;
+    border-left: 3px solid #00aaff;
+    height: 100%;
   }
 </style>

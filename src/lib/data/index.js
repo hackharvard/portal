@@ -8,6 +8,8 @@ import errorsJson from './errors.json'
 import reasonsJson from './reasons.json'
 import statesJson from './states.json'
 import fieldsJson from './fields.json'
+import datesJson from './dates.json'
+import eventCategoriesJson from './eventCategories.json'
 
 export {
   racesEthnicitiesJson,
@@ -19,5 +21,7 @@ export {
   reasonsJson,
   statesJson,
   errorsJson,
-  fieldsJson
+  fieldsJson,
+  datesJson,
+  eventCategoriesJson
 }
