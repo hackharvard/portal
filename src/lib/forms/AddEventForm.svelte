@@ -77,6 +77,11 @@
     let end = (d + time > 96 ? d + time - 96 : d + time);
     return convertToTime(end)
   }
+
+  function disableAutocomplete() {
+    const input = document.getElementById('myInput');
+    input.autocomplete = 'off';
+  }
 </script>
   
 <div class="p-4">
@@ -93,7 +98,8 @@
                     id="title" 
                     bind:field={fields.personal.title} 
                     floating 
-                    required />
+                    required 
+                    />
             </div>
 
             <div class="mt-2">

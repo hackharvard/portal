@@ -124,7 +124,7 @@
 </div>
 
 {#each $ScheduleStore as event}
-  <div class="rounded-md p-3 border-slate-300" style=" width: 450px; border-width: 1px;">
+  <div class="rounded-md p-3 border-slate-300" style=" width: 460px; border-width: 1px;">
 {#if event.editMode}
 
 <form>

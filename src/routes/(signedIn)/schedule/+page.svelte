@@ -117,7 +117,11 @@
 <div class="col-span-2 mt-32">
 
 <div class="calendar-container">
-  <div class="header bg-gray-100">
+
+  <div class="bg-blue-100">
+  </div>
+  
+  <div class="header bg-blue-100">
     <ul class="weekdays">
       <li>Day 1</li>
       <li>Day 2</li>
@@ -128,7 +132,7 @@
   <div class="timeslots-container bg-gray-100">
     <ul class="timeslots">
       {#each timeslots as timeslot}
-        <li class="flex items-center font-bold">{timeslot}</li>
+        <li class="flex items-center">{timeslot}</li>
       {/each}
     </ul>
   </div>
@@ -258,9 +262,11 @@
   }
 
   .timeslots-container {
-    /* border-radius: 4px;
+    /* border-radius: 4px; */
     border-width: 1px;
-    background: #f2f2f2; */
+    /* background: white; */
+    font-size: .9rem;
+
     grid-area: timeslots-container;
     justify-items: left;
   }
