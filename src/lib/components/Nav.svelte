@@ -32,6 +32,10 @@
     {
       name: 'Group',
       href: '/group'
+    },
+    {
+      name: 'Sleeping Bags',
+      href: '/sleepingBags'
     }
   ]
   function updateShadow() {

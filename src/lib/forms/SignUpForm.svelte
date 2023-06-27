@@ -42,7 +42,8 @@
         'dseum@college.harvard.edu',
         'vcainamisir@college.harvard.edu',
         'kharvey@college.harvard.edu',
-        'hzhang1@college.harvard.edu'
+        'hzhang1@college.harvard.edu',
+        'sashvdave@college.harvard.edu'
       ]
       if (!validEmails.includes(values.email)) {
         alert.trigger(
