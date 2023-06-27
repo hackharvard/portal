@@ -5,6 +5,9 @@
     import { db } from '$lib/firebase';
   
     let sleepingBags = [];
+    let totalSleepingBags = 0;
+    let totalVacantBags = 0;
+    let totalOccupiedBags = 0;
   
     onMount(async () => {
       const querySnapshot = await getDocs(collection($db, 'sleepingBags'));
@@ -12,6 +15,9 @@
         id: doc.id,
         ...doc.data()
       }));
+      totalSleepingBags = sleepingBags.length;
+      totalVacantBags = sleepingBags.filter(bag => !bag.occupied).length;
+      totalOccupiedBags = sleepingBags.filter(bag => bag.occupied).length;
     });
   
     const bookSleepingBag = async (id, occupant) => {
@@ -45,7 +51,12 @@
     };
   </script>
 
-<button class="bg-blue-500 text-white px-4 py-2 rounded mt-4" on:click={createSleepingBag}>Create Sleeping Bag</button>
+  <div class="mt-4">
+    <div>Total Sleeping Bags: {totalSleepingBags}</div>
+    <div>Total Vacant Bags: {totalVacantBags}</div>
+    <div>Total Occupied Bags: {totalOccupiedBags}</div>
+  </div>
+  <button class="bg-blue-500 text-white px-4 py-2 rounded mt-4" on:click={createSleepingBag}>Create Sleeping Bag</button>
   
   <div class="mt-[2rem] grid grid-cols-4 gap-x-5 gap-y-5">
     {#each sleepingBags as bag}
