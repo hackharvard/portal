@@ -35,7 +35,7 @@
     },
     {
       name: 'Sleeping Bags',
-      href: '/sleepingBags'
+      href: '/sleeping-bags'
     }
   ]
   function updateShadow() {
@@ -46,7 +46,7 @@
 <svelte:window on:scroll={updateShadow} />
 <nav
   class={classNames(
-    'px-dynamic fixed top-0 left-0 z-50 flex h-20 w-full items-center justify-between border-b bg-white transition-all',
+    'px-dynamic fixed left-0 top-0 z-50 flex h-20 w-full items-center justify-between border-b bg-white transition-all',
     shadow && !open ? 'shadow-b border-gray-200' : 'border-white'
   )}
 >
@@ -57,7 +57,7 @@
         {#each pages as page}
           <a
             class={classNames(
-              'rounded-md py-2 px-3 transition-colors',
+              'rounded-md px-3 py-2 transition-colors',
               pathname === page.href ? 'bg-gray-200' : 'hover:bg-gray-100'
             )}
             href={page.href}
@@ -108,13 +108,13 @@
 </nav>
 {#if open}
   <div
-    class="p-dynamic fixed top-20 left-0 z-50 flex h-[calc(100vh-5rem)] w-screen flex-col gap-2 bg-white sm:hidden"
+    class="p-dynamic fixed left-0 top-20 z-50 flex h-[calc(100vh-5rem)] w-screen flex-col gap-2 bg-white sm:hidden"
     transition:fade
   >
     {#each pages as page}
       <a
         class={classNames(
-          'rounded-md py-2 px-3 transition-colors',
+          'rounded-md px-3 py-2 transition-colors',
           pathname === page.href ? 'bg-gray-200' : 'hover:bg-gray-100'
         )}
         href={page.href}
