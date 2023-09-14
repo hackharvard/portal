@@ -78,10 +78,7 @@
     return convertToTime(end)
   }
 
-  function disableAutocomplete() {
-    const input = document.getElementById('myInput');
-    input.autocomplete = 'off';
-  }
+
 </script>
   
 <div class="p-4">
