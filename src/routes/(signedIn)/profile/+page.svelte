@@ -19,16 +19,17 @@
 
   let dialogEl: Dialog
   let disabled = false
+  let dialogQR: Dialog
   
+  let qrCodeSmall;
+
   onMount(() => {
-    (function() {
-        var qr = new QRious({
-          element: document.getElementById('qr'),
+    var qr = new QRious({
+          element: qrCodeSmall,
           value: `https://admin.hackharvard.io/user/${$user ? $user.profile.hhid : ''}`,
           size: 200
-        });
-      })();
-  });
+     });
+  })
 
   async function handleVerificationEmail() {
     if ($user) {
@@ -141,8 +142,19 @@
       </div>
       
       <div class="flex justify-center">
-        <canvas id="qr"></canvas>
+        <button on:click={dialogQR.open}>
+          <canvas bind:this={qrCodeSmall}></canvas>
+        </button>
       </div>
+
+      <Dialog bind:this={dialogQR} on:cancel={dialogQR.close}>
+        <svelte:fragment slot="title">QR Code</svelte:fragment>
+        <svelte:fragment slot="description">
+          <div class="flex justify-center">
+
+          </div>
+        </svelte:fragment>
+      </Dialog>
 
       <div class="text-sm">
         Any problems with changing your profile? Contact us at <a
