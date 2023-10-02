@@ -11,6 +11,9 @@ import raceJson from './race.json'
 import majorJson from './major.json'
 import experienceJson from './experience.json'
 import levelOfStudyJson from './levelOfStudy.json'
+import datesJson from './dates.json'
+import eventCategoriesJson from './eventCategories.json'
+
 
 export {
   gendersJson,
@@ -26,4 +29,6 @@ export {
   majorJson,
   experienceJson,
   levelOfStudyJson,
+  datesJson,
+  eventCategoriesJson
 }

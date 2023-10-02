@@ -32,6 +32,15 @@
       href: '/apply',
     },
     {
+      name: 'Schedule',
+      href: '/schedule',
+
+    },
+    {
+      name: 'Form', 
+      href: '/calendarform',
+    },
+    {
       name: 'FAQ',
       href: '/faq',
     },
