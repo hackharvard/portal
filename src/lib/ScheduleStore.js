@@ -10,7 +10,8 @@ const ScheduleStore = writable([
       start: '2:30 AM',
       location: 'Room 108',
       end: '3:45 AM',
-      category: 'Project'
+      category: 'Project',
+      editMode: false
     }
   ]);
 

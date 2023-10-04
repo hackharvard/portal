@@ -3,23 +3,13 @@
     import { createEventDispatcher } from 'svelte';
     import Input from '$lib/components/Input.svelte'
     import Select from '$lib/components/Select.svelte'
-    import { alert } from '$lib/stores'
     import {
         datesJson,
         eventCategoriesJson
     } from '$lib/data'
-    import {
-      format,
-      parseISO,
-      parse,
-      addMinutes,
-      isBefore,
-      isAfter,
-      isEqual,
-    } from 'date-fns';
   
     function generateUniqueId() {
-      return Math.random().toString(36).substr(2, 9);
+      return Math.random().toString(36).substring(2, length + 2);
     }
   
     let dispatch = createEventDispatcher();
@@ -32,25 +22,7 @@
         location: '',
         end: '',
         category: '',
-    }
-  
-    // date fns for time! 
-    function formatTime(field: string): string {
-      const parsedTime = parseISO(`2000-01-01T${field}`);
-      return format(parsedTime, 'hh:mm a'); // 'hh:mm a' format adds AM/PM
-    }
-
-
-
-
-    function unformatTime(formattedTime: string): string {
-    // Parse the formatted time with AM/PM
-      const parsedTime = parse(formattedTime, 'hh:mm a', new Date());
-
-      // Format the parsed time to 'HH:mm' format
-      const unformattedTime = format(parsedTime, 'HH:mm');
-
-      return unformattedTime;
+        editMode: false
     }
   
 
@@ -65,6 +37,7 @@
             location: string;
             end: string;
             category: string;
+            editMode: boolean;
         } = {
             id: Number(generateUniqueId()), 
             title: fields.title,
@@ -74,6 +47,7 @@
             location: fields.location,
             end: fields.end,
             category: fields.category,
+            editMode: fields.editMode
         };
 
         ScheduleStore.update((events) => {
@@ -90,7 +64,7 @@
   <div class="p-4">
       <h2 class="text-lg font-bold mb-2 ">Create Event</h2>
       
-      <form on:submit={submitHandler}>
+      <form on:submit|preventDefault={submitHandler}>
         <fieldset>
           <div class="grid gap-1 sm:grid-cols-2 sm:gap-3">
               <div class="mt-2">
