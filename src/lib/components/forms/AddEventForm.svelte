@@ -11,6 +11,7 @@
     import {
       format,
       parseISO,
+      parse,
       addMinutes,
       isBefore,
       isAfter,
@@ -31,10 +32,30 @@
         location: '',
         end: '',
         category: '',
-        editMode: ''
     }
   
+    // date fns for time! 
+    function formatTime(field: string): string {
+      const parsedTime = parseISO(`2000-01-01T${field}`);
+      return format(parsedTime, 'hh:mm a'); // 'hh:mm a' format adds AM/PM
+    }
+
+
+
+
+    function unformatTime(formattedTime: string): string {
+    // Parse the formatted time with AM/PM
+      const parsedTime = parse(formattedTime, 'hh:mm a', new Date());
+
+      // Format the parsed time to 'HH:mm' format
+      const unformattedTime = format(parsedTime, 'HH:mm');
+
+      return unformattedTime;
+    }
+  
+
     const submitHandler = () => {
+
         const event: {
             id: number;
             title: string;
@@ -44,7 +65,6 @@
             location: string;
             end: string;
             category: string;
-            editMode: boolean;
         } = {
             id: Number(generateUniqueId()), 
             title: fields.title,
@@ -54,7 +74,6 @@
             location: fields.location,
             end: fields.end,
             category: fields.category,
-            editMode: false,
         };
 
         ScheduleStore.update((events) => {
@@ -63,41 +82,7 @@
 
         dispatch('add');
     };
-  
-  
-    function convertToTime(time: number): string {
-      let t = (time - 1) * 15;
-      let x = t / 60;
-      if (t < 60) {
-        let new_time = ['12', (t.toString() === '0' ? '00' : t.toString())]
-        return (new_time.join(':') + ' am')
-      } else {
-        if (x > 12) {
-          if (x < 13) {
-            let minutes = (x - 12) * 15 / .25;
-            let new_time = ['12', (minutes.toString() === '0' ? '00' : minutes.toString())];
-            return (new_time.join(':') + ' pm')
-          } else {
-            let hour = (Math.floor(x - 12));
-            let minutes = (x - 12 - hour) * 15 / .25;
-            let new_time = [hour.toString(), (minutes.toString() === '0' ? '00' : minutes.toString())];
-            return (new_time.join(':') + ' pm')
-          }
-        } else {
-          let hour = Math.floor(x)
-          let minutes = (x - hour) * 15 / .25
-          let new_time = [hour.toString(), (minutes.toString() === '0' ? '00' : minutes.toString())]
-          let z = (hour === 12 ? ' pm' : ' am');
-        return (new_time.join(':') + z)
-        }
-      }
-    }
-  
-    function addDuration(time: number, duration: number): string {
-      let d = (duration / 15);
-      let end = (d + time > 96 ? d + time - 96 : d + time);
-      return convertToTime(end)
-    }
+
   
   
   </script>

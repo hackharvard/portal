@@ -7,6 +7,18 @@
             import { onMount } from 'svelte';
             import { writable } from 'svelte/store';
             import ScheduleStore from "$lib/ScheduleStore.js";
+            import {
+                  format,
+                  parseISO,
+                  addMinutes,
+                  isBefore,
+                  isAfter,
+                  isEqual,
+                  parse,
+                } from 'date-fns';
+
+            
+
           
           
             let timeslots = [
@@ -74,7 +86,7 @@
             const selectedEventId = writable(null);
             const showModal = writable(false);
           
-            function openModal(eventId: string): void {
+            function openModal(eventId: number): void {
                     selectedEventId.set(eventId);
                     showModal.set(true);
             }
@@ -84,36 +96,15 @@
               selectedEventId.set(null);
               showModal.set(false);
             }
-          
-            // might need to round
-          
-            function convertToTime(time: number): string {
-              let t = (time - 1) * 15;
-              let x = t / 60;
-              if (t < 60) {
-                let new_time = ['12', (t.toString() === '0' ? '00' : t.toString())]
-                return (new_time.join(':') + ' am')
-              } else {
-                if (x > 12) {
-                  if (x < 13) {
-                    let minutes = (x - 12) * 15 / .25;
-                    let new_time = ['12', (minutes.toString() === '0' ? '00' : minutes.toString())];
-                    return (new_time.join(':') + ' pm')
-                  } else {
-                    let hour = (Math.floor(x - 12));
-                    let minutes = (x - 12 - hour) * 15 / .25;
-                    let new_time = [hour.toString(), (minutes.toString() === '0' ? '00' : minutes.toString())];
-                    return (new_time.join(':') + ' pm')
-                  }
-                } else {
-                  let hour = Math.floor(x)
-                  let minutes = (x - hour) * 15 / .25
-                  let new_time = [hour.toString(), (minutes.toString() === '0' ? '00' : minutes.toString())]
-                  let z = (hour === 12 ? ' pm' : ' am');
-                return (new_time.join(':') + z)
-                }
-              }
-          }
+            
+            function unformatTime(formattedTime: string): string {
+              // Parse the formatted time with AM/PM
+              const parsedTime = parse(formattedTime, 'hh:mm a', new Date());
+
+              // Format the parsed time to 'hh:mm' format
+              return format(parsedTime, 'hh:mm');
+            }
+                      
           
           </script>
           
@@ -148,7 +139,7 @@
             <div class="event-container border border-gray-200 shadow">
               <div class="event-background"></div>
               {#each $ScheduleStore as event (event.id)}
-                <div key={event.id} class="slot" style={`height: ${(convertInputTime(event.end) - convertInputTime(event.start)) * 15}px; grid-row: ${convertInputTime(event.start)}; grid-column: ${convertInputDate(event.date)}; width:${calWidth(convertInputDate(event.date))}%; background-color:${eventColor(event.category)} `} on:click={() => openModal(event.id)}>
+                <div key={event.id} class="slot" style={`height: ${(convertInputTime(event.end) - convertInputTime((event.start))) * 15}px; grid-row: ${convertInputTime(event.start)}; grid-column: ${convertInputDate(event.date)}; width:${calWidth(convertInputDate(event.date))}%; background-color:${eventColor(event.category)} `} on:click={() => openModal(event.id)}>
                   <div class="event-status"></div>
                   <div class="ml-2 font-bold" style={`margin-top: ${((convertInputTime(event.end) - convertInputTime(event.start)) * 15) === 30 ? '.05px' : '2px'}; word-wrap: break-word;`}>
                     <span>{event.title}</span>
@@ -174,8 +165,8 @@
                       <h2 class="font-bold text-2xl">{item.title}</h2>
                       <p class="mt-2"><strong> Description: </strong>{item.description}</p>
                       <p class="mt-2"><strong> Location: </strong> {item.location}</p>
-                      <p class="mt-2"> <strong> Date: </strong>{(item.date)}</p>
-                      <p class="mt-2"> <strong> Time: </strong> {convertToTime(convertInputTime(item.start))} - {convertToTime(convertInputTime(item.end))}</p>
+                      <p class="mt-2"> <strong> Date: </strong>{item.date}</p>
+                      <p class="mt-2"> <strong> Time: </strong> {item.start} - {item.end}</p>
                       <button class="rounded-md mt-5 bg-blue-100 px-4 py-2 text-blue-900 shadow-sm transition-colors duration-300 hover:bg-blue-200"on:click={closeModal}>Close Modal</button>
                     </div>
                   </div>

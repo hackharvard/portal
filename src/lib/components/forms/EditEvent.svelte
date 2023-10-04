@@ -6,48 +6,11 @@
             datesJson,
             eventCategoriesJson,
         } from '$lib/data'
-   
-   function convertToMinutes(time: string): number {
-      let timeParts = time.split(":");
-      let hours = parseInt(timeParts[0]);
-      let minutes = parseInt(timeParts[1]);
-    
-      let totalMinutes = (hours * 60) + minutes;
-      return totalMinutes;
-    }
-  
-    function convertInputTime(startTime: string): number  {
-        let s = startTime.toString();
-        return (convertToMinutes(s) / 15) + 1
-      }
-  
-    function convertToTime(time: number): string {
-      let t = (time - 1) * 15;
-      let x = t / 60;
-      if (t < 60) {
-        let new_time = ['12', (t.toString() === '0' ? '00' : t.toString())]
-        return (new_time.join(':') + ' am')
-      } else {
-        if (x > 12) {
-          if (x < 13) {
-            let minutes = (x - 12) * 15 / .25;
-            let new_time = ['12', (minutes.toString() === '0' ? '00' : minutes.toString())];
-            return (new_time.join(':') + ' pm')
-          } else {
-            let hour = (Math.floor(x - 12));
-            let minutes = (x - 12 - hour) * 15 / .25;
-            let new_time = [hour.toString(), (minutes.toString() === '0' ? '00' : minutes.toString())];
-            return (new_time.join(':') + ' pm')
-          }
-        } else {
-          let hour = Math.floor(x)
-          let minutes = (x - hour) * 15 / .25
-          let new_time = [hour.toString(), (minutes.toString() === '0' ? '00' : minutes.toString())]
-          let z = (hour === 12 ? ' pm' : ' am');
-        return (new_time.join(':') + z)
-        }
-      }
-    }
+    import {
+          format,
+          parseISO,
+        } from 'date-fns';
+
 
     interface Event {
       id: number;
@@ -92,33 +55,32 @@
         location: '',
         end: '',
         category: '',
-        editMode: ''
     }
   
-    function updateEvent(event: Event): void {
+    function updateEvent(event: Event, fields: Event): void {
       ScheduleStore.update((storedEvents) => {
         const updatedEvents = storedEvents.map((e) => {
           if (e.id === event.id) {
             // Update the event's properties only if the fields are changed
-            if (fields.title !== event.title) {
-              e.title = fields.title;
+            if (fields.title !== e.title) {
+              fields.title = e.title;
             }
-            if (fields.description !== event.description) {
+            if (fields.description !== e.description) {
               e.description = fields.description;
             }
-            if (fields.date !== event.date) {
+            if (fields.date !== e.date) {
               e.date = fields.date;
             }
-            if (fields.start !== event.start) {
+            if (fields.start !== e.start) {
               e.start = fields.start;
             }
-            if (fields.location !== event.location) {
+            if (fields.location !== e.location) {
               e.location = fields.location;
             }
-            if (fields.end !== event.end) {
+            if (fields.end !== e.end) {
               e.end = fields.end;
             }
-            if (fields.category !== event.category) {
+            if (fields.category !== e.category) {
               e.category = fields.category;
             }
           }
@@ -127,6 +89,21 @@
         return updatedEvents;
       });
     }
+
+    function formatTime(field: string): string {
+      // Check if the field is a valid time string
+      const isValidTime = /^([01]\d|2[0-3]):([0-5]\d)$/.test(field);
+
+      if (isValidTime) {
+        // If it's a valid time string, format it
+        const parsedTime = parseISO(`2000-01-01T${field}`);
+        return format(parsedTime, 'hh:mm a'); // 'hh:mm a' format adds AM/PM
+      } else {
+        return field;
+      }
+    }
+
+
   
   </script>
   
@@ -243,10 +220,10 @@
     </div>
     <div class="grid gap-1 sm:grid-cols-2 sm:gap-3">
     <div class="pl-3 bg-white rounded-md mb-2">
-      <strong> Start Time:</strong> {convertToTime(convertInputTime(event.start))}
+      <strong> Start Time:</strong> {formatTime(event.start)}
     </div>
     <div class="bg-white rounded-md mb-2">
-      <strong> End Time:</strong> {convertToTime(convertInputTime(event.end))}
+      <strong> End Time:</strong> {formatTime(event.end)}
     </div>
     </div>
     <div class="pl-3 bg-white rounded-md">

@@ -7,9 +7,9 @@ const ScheduleStore = writable([
       title: 'Meeting',
       description: 'Going over updates and new tasks',
       date: '2023-10-20',
-      start: '2:30',
+      start: '2:30 AM',
       location: 'Room 108',
-      end: '3:45',
+      end: '3:45 AM',
       category: 'Project'
     }
   ]);
