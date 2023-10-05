@@ -9,7 +9,11 @@
     } from '$lib/data'
   
     function generateUniqueId() {
-      return Math.random().toString(36).substring(2, length + 2);
+      let id;
+      do {
+        id = Math.floor(Math.random() * 6)
+      } while (id === 1);
+      return id;
     }
   
     let dispatch = createEventDispatcher();
