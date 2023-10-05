@@ -207,7 +207,7 @@
   {:else}
   <div class="grid gap-1 sm:grid-cols-2 sm:gap-3">
     <div class="mt-3 pl-3 bg-white rounded-md mb-2">
-      <strong>Title: </strong> {event.id}
+      <strong>Title: </strong> {event.title}
     </div>
     <div class="mt-3 bg-white rounded-md mb-2">
       <strong>Description: </strong> {event.description}
