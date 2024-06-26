@@ -88,7 +88,7 @@ declare global {
         otherProlang: string
         experience: string
         whyHh: string
-        project: string
+        unlimitedResource: string
         predictions: string
         resume: Resume
         resumeShare: boolean

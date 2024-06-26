@@ -86,8 +86,8 @@
         Please only fill this form if you are <span class="font-bold"
           >completely certain</span
         >
-        that you can attend all 3 days of HackHarvard, which is October 20 - 22,
-        2023. If you have any questions, please contact us at
+        that you can attend all 3 days of HackHarvard, which is October 18 - 20,
+        2024. If you have any questions, please contact us at
         <Link href="mailto:team@hackharvard.io">team@hackharvard.io</Link>.
       </p>
     {/if}

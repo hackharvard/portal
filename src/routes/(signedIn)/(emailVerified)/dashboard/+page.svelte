@@ -187,17 +187,17 @@
             <div class="space-y-1">
               <p>
                 Early applications are due on <span class="font-bold">
-                  September 4th, 2023
+                  TBD, 2024
                 </span>
                 at 11:59 PM ET. Regular applications are due on
-                <span class="font-bold">September 25th, 2023</span> at 11:59 PM ET.
+                <span class="font-bold">TBD, 2024</span> at 11:59 PM ET.
               </p>
             </div>
           {/if}
           <div class="space-y-4">
             <p>
               {#if data.application.status === 'accepted'}
-                You have been accepted to HackHarvard 2023! We look forward to
+                You have been accepted to HackHarvard 2024! We look forward to
                 seeing you.
               {:else if data.application.status === 'waitlisted'}
                 You have been waitlisted. We will follow up with more
