@@ -125,6 +125,16 @@ declare global {
       }
     }
 
+    type EmailData = {
+      Subject: string,
+      From: string,
+      To: string,
+      Cc: string,
+      HTMLBody: string,
+      ReplyTo: string,
+      MessageStream: 'outbound'
+    }
+
     type Announcement<T extends 'client' | 'server' | 'pojo'> = {
       title: string
       content: string
