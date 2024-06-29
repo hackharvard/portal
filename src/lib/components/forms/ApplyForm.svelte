@@ -79,8 +79,8 @@
       otherProlang: '',
       experience: '',
       whyHh: '',
-      unlimitedResource: '',
-      predictions: 'PLACEHOLDER', // TODO: remove this if no theme question
+      project: '',
+      unlimitedResource: '', 
       resume: {
         url: '',
         name: '',
@@ -612,17 +612,17 @@
         maxlength={500}
       />
       <Textarea
+        bind:value={values.openResponse.project}
+        label={`HackHarvard is all about sparking creativity and making a positive difference through innovative projects. We'd love to hear about a project you've been part of that embodies this spirit. How did your project bring a touch of magic or create a lasting impact, whether big or small, on the people or community it reached? (500 char limit)`}
+        required
+        maxlength={500}
+      />
+      <Textarea 
         bind:value={values.openResponse.unlimitedResource}
         label={`Imagine you have access to the latest technology and unlimited resources. How would you leverage these tools to solve any societal problem of your choosing? (500 char limit)`}
         required
         maxlength={500}
       />
-      <!-- <Textarea 
-        bind:value={values.openResponse.predictions}
-        label={`In line with the theme "TODO: THEME_NAME" for HackHarvard 2024, TODO: Theme question (500 char limit)`}
-        required
-        maxlength={500}
-      /> -->
       {#if values.openResponse.resume.url === ''}
         <div>
           <Input
