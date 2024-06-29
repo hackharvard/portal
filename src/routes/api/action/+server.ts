@@ -92,7 +92,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
           ...data,
           app: {
             name: 'Portal',
-            link: 'https://portal.gbstem.org',
+            link: 'https://portal.hackharvard.io',
           },
         },
       }
