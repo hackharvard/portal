@@ -147,6 +147,13 @@ export const actionEmailTemplate = `<!doctype html>
                                                 </div>
                                             </td>
                                         </tr>
+                                        // <tr>
+                                        //     <td align="left" style="font-size:0px;padding:10px 25px;padding-top:0px;word-break:break-word;">
+                                        //         <div style="font-family:Open Sans, Helvetica, Arial, sans-serif;font-size:16px;line-height:22px;text-align:left;color:#000000;">
+                                        //             <p style="margin: 0 0">Hi hacker,</p>
+                                        //         </div>
+                                        //     </td>
+                                        // </tr>
                                         <tr>
                                             <td align="left" style="font-size:0px;padding:10px 25px;padding-top:0px;word-break:break-word;">
                                                 <div style="font-family:Open Sans, Helvetica, Arial, sans-serif;font-size:16px;line-height:22px;text-align:left;color:#000000;">
@@ -159,7 +166,7 @@ export const actionEmailTemplate = `<!doctype html>
                                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
                                                     <tbody>
                                                         <tr>
-                                                            <td align="center" role="presentation" valign="middle" bgcolor="#e20029" style="border:none;border-radius:100px;cursor:auto;mso-padding-alt:15px 25px 15px 25px;background:#e20029;"><a href="{{action.link}}" target="_blank" style="display:inline-block;background:#e20029;color:#ffffff;font-family:Open Sans, Helvetica, Arial, sans-serif;font-size:14px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:15px 25px 15px 25px;mso-padding-alt:0px;border-radius:100px;"><b style="font-weight: 700"><b style="font-weight: 700">{{action.name}}</b></b></a>
+                                                            <td align="center" role="presentation" valign="middle" bgcolor="#e20029" style="border:none;border-radius:100px;cursor:auto;mso-padding-alt:15px 25px 15px 25px;background:#e20029;"><a href="{{action.link}}" target="_blank" style="display:inline-block;background:#e20029;color:#ffffff;font-family:Open Sans, Helvetica, Arial, sans-serif;font-size:14px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:15px 25px 15px 25px;mso-padding-alt:0px;border-radius:100px;"><b style="font-weight: 700"><b style="font-weight: 700">{{action.buttonname}}</b></b></a>
                                                             </td>
                                                         </tr>
                                                     </tbody>
