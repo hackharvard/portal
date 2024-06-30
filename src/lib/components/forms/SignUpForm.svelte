@@ -47,7 +47,7 @@
               let hhid = generateId()
               for (let i = 0; i < 5; ++i) {
                 try {
-                  const res = await getDoc(doc(db, 'hhids', hhid))
+                  const res = await getDoc(doc(db, '2024-hhids', hhid))
                   if (res.exists()) {
                     hhid = generateId()
                     if (i == 4) {
@@ -57,6 +57,7 @@
                     break
                   }
                 } catch (err) {
+                  console.log('error', err.message)
                   hhid = ''
                 }
               }
@@ -67,9 +68,9 @@
                 )
                 deleteUser(user)
               } else {
-                setDoc(doc(db, 'hhids', hhid), {})
+                setDoc(doc(db, '2024-hhids', hhid), {})
                   .then(() => {
-                    setDoc(doc(db, 'users', user.uid), {
+                    setDoc(doc(db, '2024-users', user.uid), {
                       hhid,
                       role: 'applicant',
                       firstName,

@@ -119,13 +119,13 @@
           timer = window.setTimeout(resolve, 400)
         }),
         new Promise<void>((resolve) => {
-          getDoc(doc(db, 'applications', user.object.uid)).then((snapshot) => {
+          getDoc(doc(db, '2024-applications', user.object.uid)).then((snapshot) => {
             if (snapshot.exists()) {
               const applicationData =
                 snapshot.data() as Data.Application<'client'>
               if (applicationData.meta.submitted) {
                 data.application.status = 'submitted'
-                getDoc(doc(db, 'decisions', user.object.uid)).then(
+                getDoc(doc(db, '2024-decisions', user.object.uid)).then(
                   (snapshot) => {
                     if (snapshot.exists()) {
                       data.application.status = snapshot.data()

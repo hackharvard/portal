@@ -80,7 +80,7 @@
       experience: '',
       whyHh: '',
       project: '',
-      unlimitedResource: '', 
+      unlimitedResource: '',
       resume: {
         url: '',
         name: '',
@@ -109,7 +109,7 @@
   onMount(() => {
     return user.subscribe((user) => {
       if (user) {
-        getDoc(doc(db, 'applications', user.object.uid)).then(
+        getDoc(doc(db, '2024-applications', user.object.uid)).then(
           (applicationDoc) => {
             const applicationExists = applicationDoc.exists()
             if (applicationExists) {
@@ -173,11 +173,11 @@
         if ($user) {
           const frozenUser = $user
           setDoc(
-            doc(db, 'applications', frozenUser.object.uid),
+            doc(db, '2024-applications', frozenUser.object.uid),
             modifiedValues(),
           )
             .then(() => {
-              getDoc(doc(db, 'applications', frozenUser.object.uid)).then(
+              getDoc(doc(db, '2024-applications', frozenUser.object.uid)).then(
                 (applicationDoc) => {
                   const applicationData =
                     applicationDoc.data() as Data.Application<'client'>
@@ -229,37 +229,37 @@
             }
             values.meta.submitted = true
             setDoc(
-              doc(db, 'applications', frozenUser.object.uid),
+              doc(db, '2024-applications', frozenUser.object.uid),
               modifiedValues(),
             )
               .then(() => {
                 alert.trigger('success', 'Your application has been submitted!')
-                getDoc(doc(db, 'applications', frozenUser.object.uid)).then(
-                  (applicationDoc) => {
-                    fetch('/api/application', {
-                      method: 'POST',
-                    }).then(async (res) => {
-                      if (!res.ok) {
-                        const { message } = await res.json()
-                        console.log(message)
-                      }
-                      const applicationData =
-                        applicationDoc.data() as Data.Application<'client'>
-                      clearInterval(saveInterval)
-                      saveInterval = undefined
-                      values = cloneDeep(applicationData)
-                      dbValues = cloneDeep(applicationData)
-                      window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth',
-                      })
-                      alert.trigger(
-                        'success',
-                        'Your application has been submitted!',
-                      )
+                getDoc(
+                  doc(db, '2024-applications', frozenUser.object.uid),
+                ).then((applicationDoc) => {
+                  fetch('/api/application', {
+                    method: 'POST',
+                  }).then(async (res) => {
+                    if (!res.ok) {
+                      const { message } = await res.json()
+                      console.log(message)
+                    }
+                    const applicationData =
+                      applicationDoc.data() as Data.Application<'client'>
+                    clearInterval(saveInterval)
+                    saveInterval = undefined
+                    values = cloneDeep(applicationData)
+                    dbValues = cloneDeep(applicationData)
+                    window.scrollTo({
+                      top: 0,
+                      behavior: 'smooth',
                     })
-                  },
-                )
+                    alert.trigger(
+                      'success',
+                      'Your application has been submitted!',
+                    )
+                  })
+                })
               })
               .catch((err) => {
                 disabled = false
@@ -617,7 +617,7 @@
         required
         maxlength={500}
       />
-      <Textarea 
+      <Textarea
         bind:value={values.openResponse.unlimitedResource}
         label={`Imagine you have access to the latest technology and unlimited resources. How would you leverage these tools to solve any societal problem of your choosing? (500 char limit)`}
         required
