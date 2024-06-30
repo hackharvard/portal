@@ -80,7 +80,7 @@
       experience: '',
       whyHh: '',
       project: '',
-      predictions: '',
+      unlimitedResource: '', 
       resume: {
         url: '',
         name: '',
@@ -350,7 +350,7 @@
         class="w-24"
         type="number"
         bind:value={values.personal.age}
-        label="How old will you be on October 20th, 2023?"
+        label="How old will you be on October 18th, 2024?"
         min="0"
         max="100"
         required
@@ -459,7 +459,7 @@
       <Input
         type="checkbox"
         bind:value={values.academic.enrolled}
-        label="Will you be pursuing an undergraduate degree program at a university on October 20th, 2023?"
+        label="Will you be pursuing an undergraduate degree program at a university on October 18th, 2024?"
         required
       />
       <div class="grid gap-1 sm:grid-cols-3 sm:gap-3">
@@ -529,7 +529,7 @@
       <Input
         type="checkbox"
         bind:value={values.hackathon.ableToAttend}
-        label="HackHarvard is an in-person event. Will you be able to be in Cambridge, MA, United States, considering both the legal requirements for international students and the logistical aspects, on October 20th, 2023?"
+        label="HackHarvard is an in-person event. Will you be able to be in Cambridge, MA, United States, considering both the legal requirements for international students and the logistical aspects, on October 18th, 2024?"
         required
       />
       <Select
@@ -617,9 +617,9 @@
         required
         maxlength={500}
       />
-      <Textarea
-        bind:value={values.openResponse.predictions}
-        label={`In line with the theme "Hack to the Future" for HackHarvard 2023, we invite you to unleash your creativity and envision three predictions for the year 2073. Let your imagination soar as you consider how the world may have transformed. Did OpenAI create AGI? Is Taylor Swift’s granddaughter allergic to tree nuts? Does the iPhone 55 have a headphone jack? Are cat videos still funny? Share your captivating predictions with us! (500 char limit)`}
+      <Textarea 
+        bind:value={values.openResponse.unlimitedResource}
+        label={`Imagine you have access to the latest technology and unlimited resources. How would you leverage these tools to solve any societal problem of your choosing? (500 char limit)`}
         required
         maxlength={500}
       />
@@ -643,7 +643,7 @@
       <Input
         type="checkbox"
         bind:value={values.openResponse.resumeShare}
-        label="If you are accepted to HackHarvard 2023, would you like us to share your resume with our sponsors for potential recruitment opportunities?"
+        label="If you are accepted to HackHarvard 2024, would you like us to share your resume with our sponsors for potential recruitment opportunities?"
       />
     </div>
     <div class="grid gap-4">
