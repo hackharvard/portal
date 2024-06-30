@@ -147,13 +147,6 @@ export const actionEmailTemplate = `<!doctype html>
                                                 </div>
                                             </td>
                                         </tr>
-                                        // <tr>
-                                        //     <td align="left" style="font-size:0px;padding:10px 25px;padding-top:0px;word-break:break-word;">
-                                        //         <div style="font-family:Open Sans, Helvetica, Arial, sans-serif;font-size:16px;line-height:22px;text-align:left;color:#000000;">
-                                        //             <p style="margin: 0 0">Hi hacker,</p>
-                                        //         </div>
-                                        //     </td>
-                                        // </tr>
                                         <tr>
                                             <td align="left" style="font-size:0px;padding:10px 25px;padding-top:0px;word-break:break-word;">
                                                 <div style="font-family:Open Sans, Helvetica, Arial, sans-serif;font-size:16px;line-height:22px;text-align:left;color:#000000;">
