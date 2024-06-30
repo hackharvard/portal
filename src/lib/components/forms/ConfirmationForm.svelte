@@ -31,7 +31,7 @@
   onMount(() => {
     return user.subscribe((user) => {
       if (user) {
-        getDoc(doc(db, 'confirmations', user.object.uid)).then((snapshot) => {
+        getDoc(doc(db, '2024-confirmations', user.object.uid)).then((snapshot) => {
           if (snapshot.exists()) {
             const data = snapshot.data()
             values = data as {
@@ -55,7 +55,7 @@
       disabled = true
       if ($user && attending === null) {
         const frozenUser = $user
-        setDoc(doc(db, 'confirmations', frozenUser.object.uid), values)
+        setDoc(doc(db, '2024-confirmations', frozenUser.object.uid), values)
           .then(() => {
             attending = values.confirmed === confirmedOptions[0].name
           })

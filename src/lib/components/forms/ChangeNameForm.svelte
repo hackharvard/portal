@@ -35,7 +35,7 @@
         disabled = true
         const firstName = values.firstName.trim()
         const lastName = values.lastName.trim()
-        updateDoc(doc(db, 'users', frozenUser.object.uid), {
+        updateDoc(doc(db, '2024-users', frozenUser.object.uid), {
           firstName,
           lastName,
         })

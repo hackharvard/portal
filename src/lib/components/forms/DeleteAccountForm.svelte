@@ -59,13 +59,13 @@
             await Promise.all(
               [
                 deleteObject(resumeRef),
-                deleteDoc(doc(db, 'applications', frozenUser.object.uid)),
-                deleteDoc(doc(db, 'decisions', frozenUser.object.uid)),
+                deleteDoc(doc(db, '2024-applications', frozenUser.object.uid)),
+                deleteDoc(doc(db, '2024-decisions', frozenUser.object.uid)),
               ].map((p) => p.catch((e) => e)),
             )
             Promise.all([
-              deleteDoc(doc(db, 'hhids', hhid)),
-              deleteDoc(doc(db, 'users', frozenUser.object.uid)),
+              deleteDoc(doc(db, '2024-hhids', hhid)),
+              deleteDoc(doc(db, '2024-users', frozenUser.object.uid)),
             ])
               .then(() => {
                 deleteUser(frozenUser.object)

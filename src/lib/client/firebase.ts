@@ -37,7 +37,7 @@ function userStore() {
           if (!userObject.emailVerified) {
             localStorage.setItem('emailVerified', 'false')
           }
-          getDoc(doc(db, 'users', userObject.uid)).then(async (res) => {
+          getDoc(doc(db, '2024-users', userObject.uid)).then(async (res) => {
             const userProfile = res.data()
             set({
               object: userObject,
