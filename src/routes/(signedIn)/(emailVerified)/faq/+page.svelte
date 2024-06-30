@@ -34,8 +34,8 @@
         >My school is not listed on the application.</svelte:fragment
       >
       <svelte:fragment slot="content"
-        >Please email us at <Link href="mailto:team@hackharvard.io"
-          >team@hackharvard.io</Link
+        >Please email us at <Link href="mailto:tech@hackharvard.io"
+          >tech@hackharvard.io</Link
         > with information about your school and possibly a link to your school's
         website.</svelte:fragment
       >
@@ -45,8 +45,8 @@
         I keep encountering an error and can't submit!
       </svelte:fragment>
       <svelte:fragment slot="content">
-        Please contact us immediately at <Link href="mailto:team@hackharvard.io"
-          >team@hackharvard.io</Link
+        Please contact us immediately at <Link href="mailto:tech@hackharvard.io"
+          >tech@hackharvard.io</Link
         >
         with the following content.
         <ol class="list-inside list-disc">

@@ -115,8 +115,6 @@ export const POST: RequestHandler = async ({ request, locals }) => {
         },
       }
 
-      // get html template from firebase
-
       const htmlBody = addDataToHtmlTemplate(actionEmailTemplate, template)
 
       const emailData: Data.EmailData = {
