@@ -33,13 +33,14 @@ export const POST: RequestHandler = async ({ request, locals }) => {
           const link = await adminAuth.generateEmailVerificationLink(email)
           to = email
           data = {
-            subject: 'Verify Email for HackHarvard Account',
+            subject: 'Verify Your HackHarvard Email',
             action: {
               link,
-              name: 'Verify Email',
+              name: 'Verify Your Email',
               firstName: firstName,
+              buttonname: 'Verify Email',
               description:
-                'Please verify your email for your HackHarvard account by clicking the button below.',
+                'Thanks for starting the process to apply to HackHarvard! To proceed with your application, please verify your email for your HackHarvard account by clicking the button below. We are excited to see your application!',
             },
           }
           break
@@ -55,12 +56,13 @@ export const POST: RequestHandler = async ({ request, locals }) => {
             )
             to = body.newEmail
             data = {
-              subject: 'Change Email for HackHarvard Account',
-              name: firstName,
+              subject: 'HackHarvard Email Change Requested',
+              firstName: firstName,
               action: {
                 link,
-                name: 'Change Email',
-                description: `Please confirm that you want to change your email from ${locals.user.email} to ${body.newEmail} by clicking the button below.`,
+                name: 'Email Change Requested',
+                buttonname: 'Confirm Email Change',
+                description: `We recently received a request to change the email of your HackHarvard account. Please confirm that you want to change your email from ${locals.user.email} to ${body.newEmail} by clicking the button below.`,
               },
             }
           } else {
@@ -72,12 +74,30 @@ export const POST: RequestHandler = async ({ request, locals }) => {
           const link = await adminAuth.generatePasswordResetLink(body.email)
           to = body.email
           data = {
-            subject: 'Reset Password for HackHarvard Account',
+            subject: 'HackHarvard Password Reset Requested',
             action: {
               link,
-              name: 'Reset Password',
+              firstName: firstName,
+              name: 'Password Reset Requested',
+              buttonname: 'Reset Password',
               description:
-                'Please reset your password for your HackHarvard account by clicking the button below.',
+                'We recently received a request to reset the password of your HackHarvard account. To reset your password, please click the button below.',
+            },
+          }
+          break
+        }
+        case 'decisionAccept': {
+          const link = 'https://portal.hackharvard.io'
+          to = body.email
+          data = {
+            subject: 'HackHarvard Admissions Update',
+            action: {
+              link,
+              firstName: firstName,
+              name: 'Congradulations!',
+              buttonname: 'Accept Your Spot',
+              description:
+                'Congrats! We are incredibly excited to invite you to participate in this year\'s HackHarvard. From an incredibly competitive application pool, we were impressed by your responses, ideas, and goals. Further logistical information and ways to meet other hackers will be sent to your inboxes soon, so keep an eye out! To officially confirm your spot, please fill out this form in the next three days from receiving this email. We look forward to seeing you soon!',
             },
           }
           break
