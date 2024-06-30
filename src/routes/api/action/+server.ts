@@ -3,9 +3,7 @@ import type { RequestHandler } from './$types'
 import { adminAuth } from '$lib/server/firebase'
 import type { FirebaseError } from 'firebase-admin'
 import postmark from 'postmark'
-import {
-  POSTMARK_API_TOKEN,
-} from '$env/static/private'
+import { POSTMARK_API_TOKEN } from '$env/static/private'
 import { addDataToHtmlTemplate } from '$lib/utils'
 import { actionEmailTemplate } from '$lib/data/emailTemplates/actionEmailTemplate'
 
@@ -15,7 +13,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
     const body = await request.json()
     let to
     let data
-    const firstName = body.firstName;
+    const firstName = body.firstName
     try {
       switch (body.type) {
         case 'verifyEmail': {
@@ -29,18 +27,18 @@ export const POST: RequestHandler = async ({ request, locals }) => {
           } else {
             email = body.email
           }
-          console.log("verification email")
+          console.log('verification email')
           const link = await adminAuth.generateEmailVerificationLink(email)
           to = email
           data = {
-            subject: 'Verify Your HackHarvard Email',
+            subject: 'Verify Your Email for HackHarvard',
             action: {
               link,
               name: 'Verify Your Email',
               firstName: firstName,
               buttonname: 'Verify Email',
               description:
-                'Thanks for starting the process to apply to HackHarvard! To proceed with your application, please verify your email for your HackHarvard account by clicking the button below. We are excited to see your application!',
+                'Thank you for starting the HackHarvard application process! To proceed, please verify your email for your HackHarvard account by clicking the button below. We are excited to see your application!',
             },
           }
           break
@@ -56,7 +54,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
             )
             to = body.newEmail
             data = {
-              subject: 'HackHarvard Email Change Requested',
+              subject: 'HackHarvard Email Change Request',
               firstName: firstName,
               action: {
                 link,
@@ -74,7 +72,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
           const link = await adminAuth.generatePasswordResetLink(body.email)
           to = body.email
           data = {
-            subject: 'HackHarvard Password Reset Requested',
+            subject: 'HackHarvard Password Reset Request',
             action: {
               link,
               firstName: firstName,
@@ -97,7 +95,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
               name: 'Congradulations!',
               buttonname: 'Accept Your Spot',
               description:
-                'Congrats! We are incredibly excited to invite you to participate in this year\'s HackHarvard. From an incredibly competitive application pool, we were impressed by your responses, ideas, and goals. Further logistical information and ways to meet other hackers will be sent to your inboxes soon, so keep an eye out! To officially confirm your spot, please fill out this form in the next three days from receiving this email. We look forward to seeing you soon!',
+                'Congrats! We are incredibly excited to invite you to participate in HackHarvard 2024. Further logistical information and ways to meet other hackers will be sent to your inboxes soon, so keep an eye out! To officially confirm your spot, please fill out this form within three days of receiving this email.',
             },
           }
           break
@@ -119,7 +117,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 
       // get html template from firebase
 
-      const htmlBody = addDataToHtmlTemplate(actionEmailTemplate, template);
+      const htmlBody = addDataToHtmlTemplate(actionEmailTemplate, template)
 
       const emailData: Data.EmailData = {
         From: 'team@hackharvard.io',
@@ -128,13 +126,12 @@ export const POST: RequestHandler = async ({ request, locals }) => {
         Subject: String(template.data.subject),
         HTMLBody: htmlBody,
         ReplyTo: 'tech@hackharvard.io',
-        MessageStream: 'outbound'
+        MessageStream: 'outbound',
       }
 
-
       try {
-        const client = new postmark.ServerClient(POSTMARK_API_TOKEN);
-        await client.sendEmail(emailData);
+        const client = new postmark.ServerClient(POSTMARK_API_TOKEN)
+        await client.sendEmail(emailData)
         return new Response()
       } catch (err) {
         topError = error(400, 'Failed to send email.')
@@ -146,14 +143,14 @@ export const POST: RequestHandler = async ({ request, locals }) => {
         const typedErr = err as
           | FirebaseError
           | {
-            errorInfo: FirebaseError
-            codePrefix: string
-          }
+              errorInfo: FirebaseError
+              codePrefix: string
+            }
         if ('errorInfo' in typedErr) {
           topError = error(
             400,
             typedErr.errorInfo.message ||
-            'Please wait a few minutes before trying again.',
+              'Please wait a few minutes before trying again.',
           )
         } else if ('message' in typedErr) {
           topError = error(400, typedErr.message)

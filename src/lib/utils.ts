@@ -56,15 +56,15 @@ export function trapFocus(node: HTMLElement) {
 
 export function addDataToHtmlTemplate(html, template) {
   const htmlBody = html.replace(/{{(.*?)}}/g, (_, key) => {
-    const keys = key.trim().split('.');
-    let value = template.data;
+    const keys = key.trim().split('.')
+    let value = template.data
     for (const k of keys) {
-      value = value[k];
+      value = value[k]
       if (value === undefined) {
-        return '';
+        return ''
       }
     }
-    return value;
-  });
-  return htmlBody;
+    return value
+  })
+  return htmlBody
 }
