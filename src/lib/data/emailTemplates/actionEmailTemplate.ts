@@ -111,7 +111,11 @@ export const actionEmailTemplate = `<!doctype html>
                                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
                                                     <tbody>
                                                         <tr>
-                                                            <td style="width:550px;"><img height="auto" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="550" src="https://i.imgur.com/GNAEgNN.png"></td>
+                                                            <td style="width:550px; text-align:center;">
+                                                                <img height="auto" style="border:0;display:block;outline:none;text-decoration:none;width:25%;font-size:13px;margin:auto;" 
+                                                                width="137.5" 
+                                                                src="https://images.squarespace-cdn.com/content/v1/65b741a25c094207b27f1ddb/8ef999e5-1c95-4341-9156-935d7abda359/IMG_0289+%281%29.png">
+                                                            </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
