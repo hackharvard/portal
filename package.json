@@ -49,6 +49,7 @@
     "nprogress": "^0.2.0",
     "pdf-parse": "^1.1.1",
     "pdfjs-dist": "^3.11.174",
+    "postmark": "^4.0.4",
     "qrious": "^4.0.2",
     "react-pdf": "^7.5.1",
     "svelte-pdf": "^1.0.20",
