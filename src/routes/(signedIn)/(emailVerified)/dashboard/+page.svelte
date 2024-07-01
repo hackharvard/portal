@@ -119,28 +119,30 @@
           timer = window.setTimeout(resolve, 400)
         }),
         new Promise<void>((resolve) => {
-          getDoc(doc(db, '2024-applications', user.object.uid)).then((snapshot) => {
-            if (snapshot.exists()) {
-              const applicationData =
-                snapshot.data() as Data.Application<'client'>
-              if (applicationData.meta.submitted) {
-                data.application.status = 'submitted'
-                getDoc(doc(db, '2024-decisions', user.object.uid)).then(
-                  (snapshot) => {
-                    if (snapshot.exists()) {
-                      data.application.status = snapshot.data()
-                        .type as Data.Decision
-                    }
-                    resolve()
-                  },
-                )
+          getDoc(doc(db, '2024-applications', user.object.uid)).then(
+            (snapshot) => {
+              if (snapshot.exists()) {
+                const applicationData =
+                  snapshot.data() as Data.Application<'client'>
+                if (applicationData.meta.submitted) {
+                  data.application.status = 'submitted'
+                  getDoc(doc(db, '2024-decisions', user.object.uid)).then(
+                    (snapshot) => {
+                      if (snapshot.exists()) {
+                        data.application.status = snapshot.data()
+                          .type as Data.Decision
+                      }
+                      resolve()
+                    },
+                  )
+                } else {
+                  resolve()
+                }
               } else {
                 resolve()
               }
-            } else {
-              resolve()
-            }
-          })
+            },
+          )
         }),
       ]).then(() => {
         loading = false
@@ -187,10 +189,10 @@
             <div class="space-y-1">
               <p>
                 Early applications are due on <span class="font-bold">
-                  TBD, 2024
+                  July 22, 2024
                 </span>
                 at 11:59 PM ET. Regular applications are due on
-                <span class="font-bold">TBD, 2024</span> at 11:59 PM ET.
+                <span class="font-bold">August 15, 2024</span> at 11:59 PM ET.
               </p>
             </div>
           {/if}
