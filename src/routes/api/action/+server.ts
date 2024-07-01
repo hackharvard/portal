@@ -38,7 +38,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
               firstName: firstName,
               buttonname: 'Verify Email',
               description:
-                'Thank you for starting the HackHarvard application process! To proceed, please verify your email for your HackHarvard account by clicking the button below. We are excited to see your application!',
+                'Thank you for starting the HackHarvard application process! To proceed, please verify your email for your HackHarvard account by clicking the button below. You may need to refresh the portal to see the changes. We are excited to see your application!',
             },
           }
           break
