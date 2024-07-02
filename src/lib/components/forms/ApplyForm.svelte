@@ -300,7 +300,9 @@
     {:else}
       <Card>
         Please refer to the <Link href="/faq">FAQ</Link> for information on eligibility
-        before you begin the application.
+        before you begin the application. Additionally, you may
+        <b>save your application</b> and finish later by clicking the button at the
+        end of this form.
       </Card>
     {/if}
     <div class="grid gap-4">

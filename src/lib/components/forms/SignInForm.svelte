@@ -32,7 +32,7 @@
               body: JSON.stringify({ idToken }),
             })
               .then(() => {
-                goto('/dashboard')
+                goto('/profile')
               })
               .catch((err) => console.log('Sign In Error:', err))
           })

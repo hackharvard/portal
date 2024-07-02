@@ -69,7 +69,9 @@
     <p>
       Your email is not verified. Please check your inbox and spam folder for
       the verification email. If you want to use another email, please change
-      your email through the profile.
+      your email through the profile. <b
+        >You must verify your email before proceeding with your application.</b
+      >
     </p>
     <DialogActions>
       <Button on:click={dialogEl.cancel}>Close</Button>
@@ -106,6 +108,9 @@
             type="button"
             on:click={handleVerificationEmail}
             {disabled}>Send it again.</button
+          >
+          <b
+            >You must verify your email before proceeding with your application.</b
           >
         </div>
       </div>

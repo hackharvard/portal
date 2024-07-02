@@ -118,7 +118,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
       const htmlBody = addDataToHtmlTemplate(actionEmailTemplate, template)
 
       const emailData: Data.EmailData = {
-        From: 'team@hackharvard.io',
+        From: 'tech@hackharvard.io',
         To: to,
         Cc: '',
         Subject: String(template.data.subject),
