@@ -155,7 +155,7 @@
 
       <div class="text-sm">
         Any problems with changing your profile? Contact us at <Link
-          href="mailto:team@hackharvard.io">team@hackharvard.io</Link
+          href="mailto:tech@hackharvard.io">tech@hackharvard.io</Link
         >.
       </div>
     </Card>
