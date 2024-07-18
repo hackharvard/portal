@@ -188,11 +188,9 @@
           {#if data.application.status === null}
             <div class="space-y-1">
               <p>
-                Early applications are due on <span class="font-bold">
-                  July 22, 2024
-                </span>
-                at 11:59 PM ET. Regular applications are due on
-                <span class="font-bold">August 15, 2024</span> at 11:59 PM ET.
+                Applications are due on <span class="font-bold">August 31</span>
+                at 11:59 PM ET. Applications submitted past the deadline will not
+                be considered for admission.
               </p>
             </div>
           {/if}
