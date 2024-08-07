@@ -352,7 +352,7 @@
         class="w-24"
         type="number"
         bind:value={values.personal.age}
-        label="How old will you be on October 18th, 2024?"
+        label="How old will you be on October 11th, 2024?"
         min="0"
         max="100"
         required
@@ -461,7 +461,7 @@
       <Input
         type="checkbox"
         bind:value={values.academic.enrolled}
-        label="Will you be pursuing an undergraduate degree program at a university on October 18th, 2024?"
+        label="Will you be pursuing an undergraduate degree program at a university on October 11th, 2024?"
         required
       />
       <div class="grid gap-1 sm:grid-cols-3 sm:gap-3">
@@ -531,7 +531,7 @@
       <Input
         type="checkbox"
         bind:value={values.hackathon.ableToAttend}
-        label="HackHarvard is an in-person event. Will you be able to be in Cambridge, MA, United States, considering both the legal requirements for international students and the logistical aspects, on October 18th, 2024?"
+        label="HackHarvard is an in-person event. Will you be able to be in Cambridge, MA, United States, considering both the legal requirements for international students and the logistical aspects, on October 11th, 2024?"
         required
       />
       <Select
