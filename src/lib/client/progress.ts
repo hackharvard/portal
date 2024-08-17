@@ -13,6 +13,7 @@ function configure() {
 export default {
   start() {
     configure()
+    if (progressScheduled) window.clearTimeout(progressScheduled)
     progressScheduled = window.setTimeout(nProgress.start, 120)
   },
   done() {
