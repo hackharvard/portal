@@ -31,20 +31,22 @@
   onMount(() => {
     return user.subscribe((user) => {
       if (user) {
-        getDoc(doc(db, '2024-confirmations', user.object.uid)).then((snapshot) => {
-          if (snapshot.exists()) {
-            const data = snapshot.data()
-            values = data as {
-              confirmed: string
-              travelPlans: string
-              waiver: boolean
-              photoRelease: boolean
-              submitting: boolean
+        getDoc(doc(db, '2024-confirmations', user.object.uid)).then(
+          (snapshot) => {
+            if (snapshot.exists()) {
+              const data = snapshot.data()
+              values = data as {
+                confirmed: string
+                travelPlans: string
+                waiver: boolean
+                photoRelease: boolean
+                submitting: boolean
+              }
+              attending = data.confirmed === confirmedOptions[0].name
+              disabled = true
             }
-            attending = data.confirmed === confirmedOptions[0].name
-            disabled = true
-          }
-        })
+          },
+        )
       }
     })
   })
@@ -86,7 +88,7 @@
         Please only fill this form if you are <span class="font-bold"
           >completely certain</span
         >
-        that you can attend all 3 days of HackHarvard, which is October 18 - 20,
+        that you can attend all 3 days of HackHarvard, which is October 11 - 13,
         2024. If you have any questions, please contact us at
         <Link href="mailto:team@hackharvard.io">team@hackharvard.io</Link>.
       </p>
