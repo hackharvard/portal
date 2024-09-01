@@ -217,7 +217,7 @@
               {/if}
             </p>
             <Link href="/apply">View application</Link>
-            {#if data.application.status === 'accepted'}
+            <!-- {#if data.application.status === 'accepted'}
               <div>
                 <button
                   on:click={dialogEl.open}
@@ -225,9 +225,9 @@
                   >Hacker Guide</button
                 >
               </div>
-            {/if}
+            {/if} -->
 
-            {#if data.application.status === 'accepted' && cantFind}
+            <!-- {#if data.application.status === 'accepted' && cantFind}
               <p>
                 To get your certificate, please enter your name just as you
                 filled it out on the presubmission form below. If no result
@@ -250,7 +250,7 @@
                   >Download certificate of completion</button
                 >
               </div>
-            {/if}
+            {/if} -->
           </div>
         </Card>
         {#if data.application.status === 'accepted'}
