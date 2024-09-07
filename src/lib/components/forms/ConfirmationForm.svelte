@@ -89,7 +89,8 @@
           >completely certain</span
         >
         that you can attend all 3 days of HackHarvard, which is October 11 - 13,
-        2024. If you have any questions, please contact us at
+        2024. If you have any questions or need a confirmation letter for visa or
+        funding purposes, please contact us at
         <Link href="mailto:team@hackharvard.io">team@hackharvard.io</Link>.
       </p>
     {/if}
