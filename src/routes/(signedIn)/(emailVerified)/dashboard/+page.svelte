@@ -210,7 +210,8 @@
                 information!
               {:else if data.application.status === 'rejected'}
                 Unfortunately, we have decided not to accept you for this year's
-                hackathon. If you'd like to appeal this decision, contact us at
+                hackathon. We are open to appeals if-and-only-if most of your
+                intended team was accepted. If this is the case, contact us at
                 <Link href="mailto:team@hackharvard.io"
                   >team@hackharvard.io</Link
                 >. You have until September 14th to appeal.
