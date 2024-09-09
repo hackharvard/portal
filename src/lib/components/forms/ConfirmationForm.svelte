@@ -9,6 +9,7 @@
   import { doc, getDoc, setDoc } from 'firebase/firestore'
   import { onMount } from 'svelte'
   import Link from '$lib/components/Link.svelte'
+  import { status } from 'nprogress'
 
   let disabled = false
   let showValidation = false
@@ -79,7 +80,10 @@
       {#if attending === null}
         You're In! Confirm Your Attendance!
       {:else}
-        Confirmation Submitted
+        Confirmation Submitted! If you'd like to update your status, please
+        email us at <Link href="mailto:tech@hackharvard.io"
+          >tech@hackharvard.io</Link
+        >.
       {/if}
     </h2>
     {#if attending === null}

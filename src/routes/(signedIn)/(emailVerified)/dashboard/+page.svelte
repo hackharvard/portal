@@ -11,9 +11,6 @@
   import { fade } from 'svelte/transition'
   import Button from '$lib/components/Button.svelte'
   import { onMount } from 'svelte'
-  import { fill } from 'lodash-es'
-  import { differenceInSecondsWithOptions } from 'date-fns/fp'
-  import { applicationDefault } from 'firebase-admin/app'
 
   let pdfUrl =
     'https://raw.githubusercontent.com/hackharvard/portal/7c95d9c559956a4a4f414583a05a9391f2d25d76/certificates.pdf'
@@ -210,8 +207,9 @@
                 information!
               {:else if data.application.status === 'rejected'}
                 Unfortunately, we have decided not to accept you for this year's
-                hackathon. We are open to appeals if-and-only-if most of your
-                intended team was accepted. If this is the case, contact us at
+                hackathon. We are open to appeals if-and-only-if you were part
+                of the early application cycle and most of your intended team
+                was accepted. If this is the case, contact us at
                 <Link href="mailto:team@hackharvard.io"
                   >team@hackharvard.io</Link
                 >. You have until September 14th to appeal.
