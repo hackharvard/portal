@@ -40,7 +40,7 @@
   let disabled = true
   let showValidation = false
   let dbValues: Data.Application<'client'>
-  const targetDate = new Date('2024-09-10T23:59:59-04:00') // September 10th, 11:59:59 PM
+  const targetDate = new Date('2024-09-14T23:59:59-04:00') // September 14th, 11:59:59 PM
   let currentDate = new Date()
   let formSubmittable = currentDate < targetDate
   setInterval(() => {
@@ -319,7 +319,7 @@
             >August 31st 2024 at 11:59 EDT</b
           >
           for early applications, and
-          <b>September 10th 2024 at 11:59 EDT</b> for regular applications.Your application
+          <b>September 14th 2024 at 11:59 EDT</b> for regular applications.Your application
           is not currently submitted.
         </Card>
         <Card>
@@ -727,7 +727,7 @@
       />
     </svg>
     <div class="grow">
-      The deadline to apply to HackHarvard was September 10th at 11:59 PM EDT,
+      The deadline to apply to HackHarvard was September 14th at 11:59 PM EDT,
       which has passed. This message indicates that we did not receive a
       completed application from you. If you believe this to be a mistake,
       contact
