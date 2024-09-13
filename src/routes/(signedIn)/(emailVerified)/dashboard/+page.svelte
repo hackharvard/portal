@@ -191,7 +191,7 @@
                   >August 31</span
                 >
                 at 11:59 PM EDT. Regular applications are due on
-                <span class="font-bold">September 10</span>. Applications
+                <span class="font-bold">September 14</span>. Applications
                 submitted past the deadline will not be considered for
                 admission.
               </p>
