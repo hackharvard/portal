@@ -10,6 +10,7 @@
   import { onMount } from 'svelte'
   import Link from '$lib/components/Link.svelte'
   import { status } from 'nprogress'
+  import { onAuthStateChanged } from 'firebase/auth'
 
   let disabled = false
   let showValidation = false
@@ -78,7 +79,9 @@
   <fieldset class="space-y-4" {disabled}>
     <h2 class="text-xl font-bold">
       {#if attending === null}
-        You're In! Confirm Your Attendance!
+        You're In! Confirm Your Attendance! If you can no longer attend, please <b
+          >do not fill out this form</b
+        >.
       {:else}
         Confirmation Submitted! If you'd like to update your status, please
         email us at <Link href="mailto:tech@hackharvard.io"
@@ -86,6 +89,11 @@
         >.
       {/if}
     </h2>
+    <p>
+      Travel Reimbursement applications are now open <Link
+        href="https://forms.gle/gdivtjDsmBKRFmcXA">here</Link
+      >. It is due September 20th, 11:59 PM Eastern Time.
+    </p>
     {#if attending === null}
       <p>Congratulations for being accepted into HackHarvard!</p>
       <p>
