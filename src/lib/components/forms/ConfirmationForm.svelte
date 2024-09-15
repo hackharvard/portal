@@ -92,7 +92,8 @@
     <p>
       Travel Reimbursement applications are now open <Link
         href="https://forms.gle/gdivtjDsmBKRFmcXA">here</Link
-      >. It is due September 20th, 11:59 PM Eastern Time.
+      >. It is due September 20th, 11:59 PM Eastern Time. Note that
+      <b>we will provide food and sleeping accommodations during the event</b>.
     </p>
     {#if attending === null}
       <p>Congratulations for being accepted into HackHarvard!</p>
