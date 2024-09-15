@@ -91,7 +91,7 @@
     </h2>
     <p>
       Travel Reimbursement applications are now open <Link
-        href="https://forms.gle/gdivtjDsmBKRFmcXA">here</Link
+        href="https://forms.gle/aQb9oZRsRTHPbKTm7">here</Link
       >. It is due September 20th, 11:59 PM Eastern Time. Note that
       <b>we will provide food and sleeping accommodations during the event</b>.
     </p>
