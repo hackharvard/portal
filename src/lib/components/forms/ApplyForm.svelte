@@ -319,7 +319,7 @@
             >August 31st 2024 at 11:59 EDT</b
           >
           for early applications, and
-          <b>September 14th 2024 at 11:59 EDT</b> for regular applications.Your application
+          <b>September 14th 2024 at 11:59 EDT</b> for regular applications. Your application
           is not currently submitted.
         </Card>
         <Card>
