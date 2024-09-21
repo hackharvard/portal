@@ -30,6 +30,16 @@
       name: 'No, unfortuantely I cannot.',
     },
   ]
+
+  const targetDate = new Date('2024-09-18T23:59:59-04:00') // September 14th, 11:59:59 PM
+  let currentDate = new Date()
+  let formSubmittable = currentDate < targetDate
+  setInterval(() => {
+    currentDate = new Date()
+    formSubmittable = currentDate < targetDate
+  }, 1000) // Check every second
+  console.log(formSubmittable)
+
   onMount(() => {
     return user.subscribe((user) => {
       if (user) {
@@ -77,84 +87,92 @@
 
 <Form class={cn(showValidation && 'show-validation')} on:submit={handleSubmit}>
   <fieldset class="space-y-4" {disabled}>
-    <h2 class="text-xl font-bold">
-      {#if attending === null}
-        You're In! Confirm Your Attendance! If you can no longer attend, please <b
-          >do not fill out this form</b
-        >.
-      {:else}
-        Confirmation Submitted! If you'd like to update your status, please
-        email us at <Link href="mailto:tech@hackharvard.io"
-          >tech@hackharvard.io</Link
-        >.
-      {/if}
-    </h2>
-    <p>
-      Travel Reimbursement applications are now open <Link
-        href="https://forms.gle/aQb9oZRsRTHPbKTm7">here</Link
-      >. It is due September 20th, 11:59 PM Eastern Time. Note that
-      <b>we will provide food and sleeping accommodations during the event</b>.
-    </p>
-    {#if attending === null}
-      <p>Congratulations for being accepted into HackHarvard!</p>
+    {#if formSubmittable || !(attending === null)}
+      <h2 class="text-xl font-bold">
+        {#if attending === null}
+          You're In! Confirm Your Attendance! If you can no longer attend, please <b
+            >do not fill out this form</b
+          >.
+        {:else}
+          Confirmation Submitted! If you'd like to update your status, please
+          email us at <Link href="mailto:tech@hackharvard.io"
+            >tech@hackharvard.io</Link
+          >.
+        {/if}
+      </h2>
       <p>
-        Please only fill this form if you are <span class="font-bold"
-          >completely certain</span
-        >
-        that you can attend all 3 days of HackHarvard, which is October 11 - 13,
-        2024. If you have any questions or need a confirmation letter for visa or
-        funding purposes, please contact us at
-        <Link href="mailto:team@hackharvard.io">team@hackharvard.io</Link>.
+        Travel Reimbursement applications are now open <Link
+          href="https://forms.gle/aQb9oZRsRTHPbKTm7">here</Link
+        >. It is due September 20th, 11:59 PM Eastern Time. Note that
+        <b>we will provide food and sleeping accommodations during the event</b>.
       </p>
-    {/if}
-    <Select
-      bind:value={values.confirmed}
-      label="Can you confirm that you can attend all 3 days of HackHarvard?"
-      options={confirmedOptions}
-      required
-    />
-    <Select
-      bind:value={values.travelPlans}
-      label="Have you finalized travel plans?"
-      options={[
-        {
-          name: 'Yes, I have finalized travel plans.',
-        },
-        {
-          name: 'No, I do not have travel plans right now.',
-        },
-      ]}
-      required
-    />
-    <p>
-      Please read the <Link
-        href="https://storage.googleapis.com/hackharvard-public/waiver.pdf"
-        target="_blank"
-        rel="noreferrer">waiver</Link
-      >. Note that agreeing to the waiver is required to attend.
-    </p>
-    <Input
-      type="checkbox"
-      bind:value={values.waiver}
-      label="Yes, I have read the waiver and agree to the conditions."
-      required
-    />
-    <Input
-      type="checkbox"
-      bind:value={values.photoRelease}
-      label="I grant permission for my photograph, video, or likeness to be captured at HackHarvard and used by HackHarvard for event-related promotional and marketing purposes, including online and offline materials. I understand that I won’t receive compensation for this use, and my participation is voluntary. I agree to these terms by checking this box."
-      required
-    />
-    <Input
-      type="checkbox"
-      bind:value={values.submitting}
-      label="I understand submitting confirms my decision to attend HackHarvard and that I can no longer make further changes."
-      required
-    />
-    {#if attending === null}
-      <div class="flex justify-end">
-        <Button color="blue" type="submit">Submit</Button>
-      </div>
+      {#if attending === null}
+        <p>Congratulations for being accepted into HackHarvard!</p>
+        <p>
+          Please only fill this form if you are <span class="font-bold"
+            >completely certain</span
+          >
+          that you can attend all 3 days of HackHarvard, which is October 11 - 13,
+          2024. If you have any questions or need a confirmation letter for visa or
+          funding purposes, please contact us at
+          <Link href="mailto:team@hackharvard.io">team@hackharvard.io</Link>.
+        </p>
+      {/if}
+      <Select
+        bind:value={values.confirmed}
+        label="Can you confirm that you can attend all 3 days of HackHarvard?"
+        options={confirmedOptions}
+        required
+      />
+      <Select
+        bind:value={values.travelPlans}
+        label="Have you finalized travel plans?"
+        options={[
+          {
+            name: 'Yes, I have finalized travel plans.',
+          },
+          {
+            name: 'No, I do not have travel plans right now.',
+          },
+        ]}
+        required
+      />
+      <p>
+        Please read the <Link
+          href="https://storage.googleapis.com/hackharvard-public/waiver.pdf"
+          target="_blank"
+          rel="noreferrer">waiver</Link
+        >. Note that agreeing to the waiver is required to attend.
+      </p>
+      <Input
+        type="checkbox"
+        bind:value={values.waiver}
+        label="Yes, I have read the waiver and agree to the conditions."
+        required
+      />
+      <Input
+        type="checkbox"
+        bind:value={values.photoRelease}
+        label="I grant permission for my photograph, video, or likeness to be captured at HackHarvard and used by HackHarvard for event-related promotional and marketing purposes, including online and offline materials. I understand that I won’t receive compensation for this use, and my participation is voluntary. I agree to these terms by checking this box."
+        required
+      />
+      <Input
+        type="checkbox"
+        bind:value={values.submitting}
+        label="I understand submitting confirms my decision to attend HackHarvard and that I can no longer make further changes."
+        required
+      />
+      {#if attending === null}
+        <div class="flex justify-end">
+          <Button color="blue" type="submit">Submit</Button>
+        </div>
+      {/if}
+    {:else}
+        <p>
+          You were accepted to HackHarvard 2024, but we unfortunately 
+          did not receive confirmation of your attendance in time. 
+          We hope to see you next year!
+        </p>
     {/if}
   </fieldset>
 </Form>
