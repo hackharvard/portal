@@ -90,9 +90,8 @@
     {#if formSubmittable || !(attending === null)}
       <h2 class="text-xl font-bold">
         {#if attending === null}
-          You're In! Confirm Your Attendance! If you can no longer attend, please <b
-            >do not fill out this form</b
-          >.
+          You're In! Confirm Your Attendance! If you can no longer attend,
+          please <b>do not fill out this form</b>.
         {:else}
           Confirmation Submitted! If you'd like to update your status, please
           email us at <Link href="mailto:tech@hackharvard.io"
@@ -100,12 +99,6 @@
           >.
         {/if}
       </h2>
-      <p>
-        Travel Reimbursement applications are now open <Link
-          href="https://forms.gle/aQb9oZRsRTHPbKTm7">here</Link
-        >. It is due September 20th, 11:59 PM Eastern Time. Note that
-        <b>we will provide food and sleeping accommodations during the event</b>.
-      </p>
       {#if attending === null}
         <p>Congratulations for being accepted into HackHarvard!</p>
         <p>
@@ -113,8 +106,8 @@
             >completely certain</span
           >
           that you can attend all 3 days of HackHarvard, which is October 11 - 13,
-          2024. If you have any questions or need a confirmation letter for visa or
-          funding purposes, please contact us at
+          2024. If you have any questions or need a confirmation letter for visa
+          or funding purposes, please contact us at
           <Link href="mailto:team@hackharvard.io">team@hackharvard.io</Link>.
         </p>
       {/if}
@@ -168,11 +161,11 @@
         </div>
       {/if}
     {:else}
-        <p>
-          You were accepted to HackHarvard 2024, but we unfortunately 
-          did not receive confirmation of your attendance in time. 
-          We hope to see you next year!
-        </p>
+      <p>
+        You were accepted to HackHarvard 2024, but we unfortunately did not
+        receive confirmation of your attendance in time. We hope to see you next
+        year!
+      </p>
     {/if}
   </fieldset>
 </Form>
