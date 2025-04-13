@@ -21,16 +21,19 @@
 
   let dialogEl: Dialog
   let disabled = false
+  let userHHID = ''
+
+  // Subscribe to user store at the top level
+  $: if ($user) {
+    userHHID = $user.profile.hhid;
+  }
 
   onMount(() => {
-    return user.subscribe((user) => {
-      new QRious({
-        element: document.getElementById('qr'),
-        value: `https://admin.hackharvard.io/user/${
-          $user ? $user.profile.hhid : ''
-        }`,
-        size: 200,
-      })
+    // Create QR code without nested store subscription
+    new QRious({
+      element: document.getElementById('qr'),
+      value: `https://admin.hackharvard.io/user/${userHHID}`,
+      size: 200,
     })
   })
 
@@ -120,7 +123,7 @@
         <Field class="pr-9">
           <div class="relative h-6 overflow-x-auto">
             <div class="absolute left-0 top-0 whitespace-nowrap">
-              {`HHID: ${$user ? $user.profile.hhid : ''}`}
+              {`HHID: ${userHHID}`}
             </div>
           </div>
         </Field>
@@ -128,6 +131,7 @@
           <button
             class="text-black transition-colors duration-300 hover:text-gray-700"
             type="button"
+            aria-label="Copy HHID to clipboard"
             on:click={() => {
               if ($user) {
                 navigator.clipboard.writeText($user.profile.hhid)

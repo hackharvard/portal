@@ -3,7 +3,9 @@
     id: string
     setOpen: (newState: boolean) => void
   }
-  let current: SelectData
+  // Store for keeping track of open select elements
+  import { writable } from 'svelte/store'
+  export const openSelects = writable<SelectData | null>(null)
 </script>
 
 <script lang="ts">
@@ -25,6 +27,7 @@
   type SelectOption = string
   type SelectOptionJson = {
     name: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any
   }
   let optionsJson: Array<SelectOptionJson> = []
@@ -32,6 +35,16 @@
 
   let open = false
   let selectedOptionIndex = 0
+  let currentActive: SelectData | null
+
+  // Subscribe to the store to track open selects
+  const unsubscribe = openSelects.subscribe((value) => {
+    currentActive = value;
+  });
+
+  // Clean up subscription on component destruction
+  import { onDestroy } from 'svelte';
+  onDestroy(unsubscribe);
 
   const options = optionsJson.map((item) => item.name)
   let filteredOptions: Array<SelectOption> = []
@@ -48,21 +61,23 @@
 
   $: if (open) {
     // close any other open select element
-    if (current && current.id !== id) {
-      current.setOpen(false)
+    if (currentActive && currentActive.id !== id) {
+      currentActive.setOpen(false)
     }
-    current = {
+    // Update the store
+    openSelects.set({
       id,
       setOpen: (value) => {
         open = value
       },
-    }
+    })
   } else {
     // validate value before close
     if (!options.includes(value)) {
       value = ''
     }
   }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   $: ((_) => {
     // validate updated value
     filterOptionsBy(value)
@@ -171,6 +186,7 @@
     <div class="absolute right-0 top-0 flex h-12 items-center pr-2">
       <button
         type="button"
+        aria-label="Toggle dropdown menu"
         on:click={() => {
           open = !open
           if (open && self) {
@@ -244,6 +260,7 @@
       <div class="absolute right-0 top-0 flex h-12 items-center pr-2">
         <button
           type="button"
+          aria-label="Toggle dropdown menu"
           on:click={() => {
             open = !open
             if (open && self) {
