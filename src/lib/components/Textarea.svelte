@@ -58,7 +58,7 @@
     {name}
     {required}
     {...$$restProps}
-  />
+  ></textarea>
   {#if $$restProps?.maxlength && visible}
     <div
       class="absolute bottom-3 right-3 rounded border border-gray-100 bg-gray-100 px-1 text-gray-500 shadow-sm"

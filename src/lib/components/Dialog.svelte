@@ -59,7 +59,7 @@
   <div
     class="fixed inset-0 z-50 h-screen w-screen bg-black opacity-40"
     transition:fade={{ duration: 200 }}
-  />
+  ></div>
   <div
     class="fixed inset-0 z-50 h-screen w-screen overflow-y-auto"
     transition:fade={{ duration: 200 }}

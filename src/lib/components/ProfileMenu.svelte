@@ -36,6 +36,7 @@
   <button
     class="hidden h-10 w-10 items-center justify-center rounded-full border-2 border-black transition-colors hover:bg-gray-200 sm:flex"
     type="button"
+    aria-label="Open profile menu"
     on:click={() => {
       open = !open
     }}

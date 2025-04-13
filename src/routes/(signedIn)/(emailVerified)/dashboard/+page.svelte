@@ -160,6 +160,7 @@
   <div slot="description" class="space-y-4">
     <iframe
       class="h-[calc(100vh-300px)] w-full"
+      title="Hack Harvard Hacker Guide"
       src="https://docs.google.com/document/d/e/2PACX-1vSG9CCzX3-K99gWP7SjdzaxQ9APRbbhXi2pwlWiFig2q9sbFh3TDjkFY7BQZj3dZXRgf-Ed6VKIqBRc/pub?embedded=true"
     ></iframe>
     <DialogActions>
